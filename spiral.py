@@ -1,9 +1,14 @@
+#!/usr/bin/env python
 import matplotlib.pyplot as plt
+import numpy as np
 
-center = 25
+center = 7
 side = center*2
 def distFromOrigin(x, y, old_dx, dx, old_dy, dy):
-    return ((center - x)**2 + (center - y)**2, -(old_dx*dx + old_dy*dy))
+    ax, ay = x - center, y - center
+    bx, by = old_dx - center, old_dy - center
+    angle_tan = np.float64(1.0) * (ax * by - ay * bx) / (ax * bx + ay * by)
+    return ((center - x)**2 + (center - y)**2, angle_tan, -(old_dx*dx + old_dy*dy))
     #return (-(old_dx*dx + old_dy*dy), (center - x)**2 + (center - y)**2)
 
 import numpy as np
@@ -25,7 +30,7 @@ while x > 1 and x < side - 2 and y > 1 and y < side - 2:
             y_new = y + dy
             if (dx != 0 or dy != 0) and (dx, dy) != (old_dx, old_dy) and not marked[y_new][x_new]:
                 dist = distFromOrigin(x_new, y_new, old_dx, dx, old_dy, dy)
-                #print (dx, dy, old_dx, old_dy, dist)
+                print dist
                 if dist < best_dist:
                     best_dist = dist
                     best_dx = dx
