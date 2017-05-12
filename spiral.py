@@ -1,23 +1,22 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 import numpy as np
+from math import atan2
 
 center = 25
 side = center*2
 def distFromOrigin(x, y, old_dx, dx, old_dy, dy):
     ax, ay = x - center, y - center
     bx, by = old_dx - center, old_dy - center
-    angle_tan = np.float64(1.0) * (ax * by - ay * bx) / (ax * bx + ay * by)
-    if angle_tan < 0:
-        angle_tan = 20
+    angle = atan2((ax * by - ay * bx) ,  (ax * bx + ay * by))
 
     distance_from_center = (center - x)**2 + (center - y)**2
     scalar_product_with_previous = old_dx*dx + old_dy*dy
 
     a = 1
-    b = 0
-    c = 0
-    return a * distance_from_center - b * scalar_product_with_previous - c * angle_tan
+    b = 0.1
+    c = 0.1
+    return a * distance_from_center - b * scalar_product_with_previous - c * angle
     #return angle_tan
     #return (-(old_dx*dx + old_dy*dy), (center - x)**2 + (center - y)**2)
 
