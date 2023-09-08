@@ -3,7 +3,7 @@ from functools import partial
 import turtle
 from typing import List, Optional
 
-UNIT = 5
+UNIT = 15
 
 
 @dataclass
@@ -21,7 +21,7 @@ class IntPoint2d:
         ]
 
     def manhattan_distance(self, other):
-        return max(abs(self.x - other.x), abs(self.x - other.x))
+        return max(abs(self.x - other.x), abs(self.y - other.y))
 
     def manhattan_neighbours(self, other, r=1):
         return self.manhattan_distance(other) <= r
@@ -43,8 +43,8 @@ class IntPoint2d:
 
 
 def key_to_angle(key: str) -> int:
-    if key[0:3] == "KP_":
-        key = key[3:0]
+    if key.startswith("KP_"):
+        key = key[3:]
 
     DIGIT_TO_ANGLE = {
         '6': 0,
@@ -214,3 +214,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
